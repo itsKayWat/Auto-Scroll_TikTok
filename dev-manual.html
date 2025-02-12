@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassDoor-PayScale_Analyzer Documentation</title>
+    <style>
+        :root {
+            --background: #1a1a1a;
+            --text: #ffffff;
+            --section: #2d2d2d;
+            --button: #0077ee;
+            --button-hover: #0055bb;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            color: #d6d6dd;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(44, 44, 44, 0.95);
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+            box-sizing: border-box;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #2ea043, #347d39);
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            height: 36px;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #3ab54d, #3b8b40);
+            transform: translateY(-2px);
+        }
+
+        .github-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            height: 36px;
+        }
+
+        .github-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .github-nav-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .onpoint-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d6d6dd;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            height: 36px;
+        }
+
+        .onpoint-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tiktok-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #00f2ea, #ff0050);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            height: 36px;
+        }
+
+        .tiktok-btn:hover {
+            background: linear-gradient(45deg, #00ddd5, #ff1a66);
+            transform: translateY(-2px);
+        }
+
+        .main-wrapper {
+            display: flex;
+            padding-top: 60px;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(44, 44, 44, 0.95);
+            padding: 1rem;
+            height: calc(100vh - 60px);
+            position: fixed;
+            left: 0;
+            top: 60px;
+            overflow-y: auto;
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin: 0.5rem 0;
+        }
+
+        .sidebar a {
+            color: #d6d6dd;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar a.active {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .container {
+            background: rgba(44, 44, 44, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            width: 85%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        section {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin: 0.5rem 0;
+            color: #7ee787;
+        }
+
+        .coffee-section {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(44, 44, 44, 0.95);
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .coffee-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #2ea043, #347d39);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .coffee-button:hover {
+            background: linear-gradient(45deg, #3ab54d, #3b8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 160, 67, 0.3);
+        }
+
+        code {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: "Fira Code", "Cascadia Code", monospace;
+            display: block;
+            margin: 15px 0;
+        }
+
+        .tool-section {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .tool-preview {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .primary-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #2ea043, #347d39);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .primary-button:hover {
+            background: linear-gradient(45deg, #3ab54d, #3b8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 160, 67, 0.3);
+        }
+
+        .tool-description {
+            max-width: 600px;
+            line-height: 1.6;
+            color: #d6d6dd;
+        }
+
+        .other-tools {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .other-tools h4 {
+            color: #d6d6dd;
+            margin-bottom: 15px;
+        }
+
+        .tool-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b2b, #ff8c42);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tool-button:hover {
+            background: linear-gradient(45deg, #ff8c42, #ffa162);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 43, 0.3);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: 20px 0;
+            opacity: 0.7;
+        }
+
+        .sidebar-logo {
+            font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #ff6b2b;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 2px 10px rgba(255, 107, 43, 0.3);
+        }
+
+        .sidebar-logo span {
+            background: linear-gradient(to right, 
+                rgb(255, 107, 0) 0%,    /* Orange */
+                rgb(139, 195, 74) 100%  /* Green */
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5em;
+            font-weight: normal;
+        }
+
+        .sidebar-logo .subtitle {
+            display: block;
+            font-size: 0.6em;
+            color: #808080;
+            margin-top: 2px;
+            background: none;
+            -webkit-text-fill-color: #808080;
+        }
+
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(44, 44, 44, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-content h1 {
+            font-size: 2.5em;
+            margin: 0;
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2em;
+            color: #aaaaaa;
+            margin: 15px 0 30px 0;
+        }
+
+        .launch-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .launch-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .button-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .launch-button:hover .button-icon {
+            transform: translateX(5px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            padding: 25px;
+            background: rgba(44, 44, 44, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(44, 44, 44, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #4CAF50;
+            margin: 0 0 10px 0;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .check-icon {
+            color: #4CAF50;
+            font-size: 1.2em;
+        }
+
+        .benefit-content strong {
+            display: block;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .benefit-content p {
+            margin: 0;
+            color: #aaaaaa;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            color: #ffffff;
+            font-size: 2em;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #4CAF50;
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .benefit-card {
+            background: rgba(44, 44, 44, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(44, 44, 44, 0.6);
+            border-color: rgba(76, 175, 80, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .check-circle {
+            width: 32px;
+            height: 32px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .benefit-header h3 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .benefit-desc {
+            color: #aaaaaa;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefit-card {
+                padding: 20px;
+            }
+        }
+
+        .onpoint-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .onpoint-title {
+            font-size: 3em;
+            margin: 0;
+            background: linear-gradient(to right, 
+                rgb(255, 107, 0) 0%,    /* Orange */
+                rgb(139, 195, 74) 100%  /* Green */
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .onpoint-subtitle {
+            color: #808080;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .tool-card {
+            background: rgba(44, 44, 44, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            min-height: 120px;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            background: rgba(44, 44, 44, 1);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .tool-type {
+            display: inline-block;
+            color: #4CAF50;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .tool-card h3 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.3em;
+            line-height: 1.4;
+        }
+
+        .tool-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .tools-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card {
+                min-height: 100px;
+            }
+        }
+
+        .table-of-contents {
+            background: rgba(44, 44, 44, 0.95);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #4a9eff;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            color: #d6d6dd;
+            text-decoration: none;
+            border-bottom: 1px dotted #4a9eff;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .toc-section {
+            margin-left: 20px;
+            border-left: 2px solid #4a9eff;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        .toc-subitem {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: #d6d6dd;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(44, 44, 44, 0.95);
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .page-navigation, .quick-tabs {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-dark);
+            padding: 10px;
+            border: 1px solid #4a9eff;
+            z-index: 2000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .page-navigation {
+            left: 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quick-tabs {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .nav-button {
+            padding: 8px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: #d6d6dd;
+            border-bottom: 1px solid #4a9eff;
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: none;
+            border: none;
+            font-size: 1em;
+            min-width: 100px;
+        }
+
+        .nav-button:hover {
+            color: #4a9eff;
+        }
+
+        .nav-button:disabled {
+            color: #666;
+            cursor: not-allowed;
+            border-bottom: 1px solid #666;
+        }
+
+        .quick-tab {
+            padding: 8px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: #d6d6dd;
+            border-bottom: 1px solid #4a9eff;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .quick-tab:hover {
+            color: #4a9eff;
+        }
+
+        /* Main content container */
+        #dev-manual {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(44, 44, 44, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Manual title */
+        #dev-manual h1 {
+            color: #d6d6dd;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+        }
+
+        /* Table of contents container */
+        .table-of-contents {
+            background: rgba(26, 26, 26, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 20px auto;
+            border: 1px solid #4a9eff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+        }
+
+        /* Navigation layout */
+        .manual-navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Left side navigation */
+        .page-navigation {
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #4a9eff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            width: 120px;
+            pointer-events: auto;
+        }
+
+        /* Right side quick tabs */
+        .quick-tabs {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 26, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #4a9eff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            width: 120px;
+            pointer-events: auto;
+        }
+
+        /* Navigation buttons */
+        .nav-button {
+            padding: 12px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: #d6d6dd;
+            background: none;
+            border: none;
+            border-bottom: 1px solid #4a9eff;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            color: #4a9eff;
+            transform: translateX(5px);
+        }
+
+        /* Quick tabs styling */
+        .quick-tab {
+            padding: 12px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: #d6d6dd;
+            border-bottom: 1px solid #4a9eff;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quick-tab:hover {
+            color: #4a9eff;
+            transform: translateX(-5px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1600px) {
+            .page-navigation {
+                left: 20px;
+            }
+            .quick-tabs {
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .page-navigation, .quick-tabs {
+                display: none;
+            }
+            #dev-manual {
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Auto Scroll for TikTok</h1>
+        <div class="nav-buttons">
+            <a href="https://chrome.google.com/webstore/detail/auto-scroll-for-tiktok/your-extension-id" target="_blank" class="nav-btn">
+                Chrome Store
+            </a>
+            <a href="https://www.tiktok.com/@ll_kayawt_ll" target="_blank" class="tiktok-btn">
+                @ll_kayawt_ll
+            </a>
+            <a href="https://onpoint.fixmyapple.org/" target="_blank" class="onpoint-btn">
+                OnPoint
+            </a>
+            <a href="https://github.com/KayWat/Auto-Scroll-for-TikTok" target="_blank" class="github-nav-btn">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" />
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#overview" class="active">Overview</a></li>
+                <li><a href="#features">Key Features</a></li>
+                <li><a href="#usage">Usage Guide</a></li>
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#dev-manual">Dev-Manual</a></li>
+                <li><a href="#support">Support The Dev</a></li>
+            </ul>
+            <div class="sidebar-bottom" onclick="var newWindow = window.open('https://onpoint.fixmyapple.org/'); newWindow.focus();" style="cursor: pointer;">
+                <a class="sidebar-logo">
+                    <span>OnPoint</span>
+                    <span class="subtitle">hope you have a good day</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Merged Overview Section -->
+            <div class="container" id="overview">
+                <section class="tool-section">
+                    <div class="hero-section">
+                        <div class="hero-content">
+                            <h1>Auto Scroll for TikTok</h1>
+                            <p class="hero-subtitle">Enhance your TikTok viewing experience</p>
+                            <div class="hero-actions">
+                                <a href="https://chrome.google.com/webstore/detail/auto-scroll-for-tiktok/your-extension-id" target="_blank" class="launch-button">
+                                    Add to Chrome
+                                    <span class="button-icon">→</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-image">
+                            <img src="tool-preview.png" alt="Tool Preview" class="preview-image">
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>Auto Scroll</h3>
+                            <p>Automatically moves to the next video when the current one ends</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎮</div>
+                            <h3>Keyboard Shortcuts</h3>
+                            <p>Quick controls with Shift+S for auto-scroll and Shift+F for fullscreen</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎵</div>
+                            <h3>Background Play</h3>
+                            <p>Keep videos playing even when the tab is in the background</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h3>Fullscreen Mode</h3>
+                            <p>Optimized for the best fullscreen viewing experience</p>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h2 class="section-title">Why Choose This Tool?</h2>
+                        <div class="benefits-grid">
+                            <div class="benefit-card">
+                                <div class="benefit-header">
+                                    <div class="check-circle">✓</div>
+                                    <h3>Instant Analysis</h3>
+                                </div>
+                                <p class="benefit-desc">Upload your data and get immediate market comparisons with real-time processing and intelligent matching algorithms</p>
+                            </div>
+
+                            <div class="benefit-card">
+                                <div class="benefit-header">
+                                    <div class="check-circle">✓</div>
+                                    <h3>Location Aware</h3>
+                                </div>
+                                <p class="benefit-desc">Smart location detection with regional salary adjustments, ensuring your comparisons are accurate to your specific market</p>
+                            </div>
+
+                            <div class="benefit-card">
+                                <div class="benefit-header">
+                                    <div class="check-circle">✓</div>
+                                    <h3>Data Visualization</h3>
+                                </div>
+                                <p class="benefit-desc">Interactive charts and graphs provide clear, actionable insights with customizable views and trend analysis</p>
+                            </div>
+
+                            <div class="benefit-card">
+                                <div class="benefit-header">
+                                    <div class="check-circle">✓</div>
+                                    <h3>Easy Export</h3>
+                                </div>
+                                <p class="benefit-desc">Export your analysis in multiple formats (PDF, CSV, Excel) with professionally formatted reports ready for presentations</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Features Tab -->
+            <div class="container" id="features">
+                <section>
+                    <h2>Key Features</h2>
+                    <ul class="feature-list">
+                        <li>
+                            <strong>Automated Data Import</strong>
+                            <p>Seamlessly import your pay history from HTML or CSV files</p>
+                        </li>
+                        <li>
+                            <strong>Location Intelligence</strong>
+                            <p>Automatic location detection for accurate regional salary data</p>
+                        </li>
+                        <li>
+                            <strong>Interactive Charts</strong>
+                            <p>Visual representation of your pay trends vs market rates</p>
+                        </li>
+                        <li>
+                            <strong>Multiple Export Options</strong>
+                            <p>Save as CSV, HTML, or take instant screenshots</p>
+                        </li>
+                        <li>
+                            <strong>Real-time Updates</strong>
+                            <p>Current Glassdoor salary data integration</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Usage Guide Tab -->
+            <div class="container" id="usage">
+                <section>
+                    <h2>How to Use</h2>
+                    <div class="usage-steps">
+                        <div class="step">
+                            <h3>1. Data Import</h3>
+                            <p>Upload your pay history using the "Import Data" button</p>
+                        </div>
+                        <div class="step">
+                            <h3>2. Job Details</h3>
+                            <p>Enter your job title and verify your location</p>
+                        </div>
+                        <div class="step">
+                            <h3>3. Market Data</h3>
+                            <p>Use the search tool to find and enter Glassdoor salary ranges</p>
+                        </div>
+                        <div class="step">
+                            <h3>4. Generate Report</h3>
+                            <p>Click "Compare Salaries" to see your analysis</p>
+                        </div>
+                        <div class="step">
+                            <h3>5. Save Results</h3>
+                            <p>Export your report in your preferred format</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Privacy Policy Tab -->
+            <div class="container" id="privacy">
+                <section>
+                    <h2>Privacy Policy</h2>
+                    <p>Effective Date: March 14, 2024</p>
+
+                    <h3>Introduction</h3>
+                    <p>Auto Scroll for TikTok is a browser extension designed to automatically scroll to the next video when the current one ends, enhancing the user experience by providing seamless video playback.</p>
+
+                    <h3>Data Collection</h3>
+                    <p>This extension does not collect, store, or share any personal data from users. It operates entirely on the user's device and does not transmit any data to external servers.</p>
+
+                    <h3>Data Usage</h3>
+                    <p>Since no data is collected, there is no data usage to disclose.</p>
+
+                    <h3>Data Sharing</h3>
+                    <p>We do not share any user data with third parties.</p>
+
+                    <h3>User Rights</h3>
+                    <p>As no data is collected, users have no data-related rights to exercise.</p>
+
+                    <h3>Contact Information</h3>
+                    <p>If you have any questions or concerns about this privacy policy, please reach out to us on <a href="https://www.tiktok.com/@ll_kayawt_ll" target="_blank">@ll_kayawt_ll</a>.</p>
+                </section>
+            </div>
+
+            <!-- Buy Me a Coffee Tab -->
+            <div class="container" id="support">
+                <div class="coffee-section">
+                    <h3>Fuel the Development! ☕️</h3>
+                    <p>Created with ❤️ by KayWat</p>
+                    <p>Your coffee keeps the updates coming and helps maintain this free tool for everyone!</p>
+                    <div class="coffee-buttons">
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=J3ABMPG6MQF3L&custom=1coffee" class="coffee-button">One Coffee ($6)</a>
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=J3ABMPG6MQF3L&custom=2coffees" class="coffee-button">Two Coffees ($12)</a>
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=J3ABMPG6MQF3L&custom=3coffees" class="coffee-button">Three Coffees ($24)</a>
+                    </div>
+                    <div class="other-tools">
+                        <h4>Check Out Our Other Tools</h4>
+                        <a href="https://onpoint.fixmyapple.org/" target="_blank" class="tool-button">
+                            OnPoint
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OnPoint Tools Tab -->
+            <div class="container" id="onpoint-tools">
+                <div class="onpoint-header">
+                    <a class="sidebar-logo">
+                        <span>OnPoint</span>
+                        <span class="subtitle">hope you have a good day</span>
+                    </a>
+                </div>
+
+                <div class="tools-container">
+                    <div class="tool-card">
+                        <span class="tool-type">Web Tool</span>
+                        <h3>Glassdoor Salary Comparison Tool</h3>
+                        <a href="https://onpoint.fixmyapple.org/glassdoor-salary-comparison" target="_blank" class="tool-link"></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <span class="tool-type">Web Tool</span>
+                        <h3>Overtime Calculator</h3>
+                        <a href="https://onpoint.fixmyapple.org/overtime-calculator" target="_blank" class="tool-link"></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <span class="tool-type">Web Tool</span>
+                        <h3>Reverse Sales Tax Calculator</h3>
+                        <a href="https://onpoint.fixmyapple.org/reverse-sales-tax" target="_blank" class="tool-link"></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <span class="tool-type">Web Tool</span>
+                        <h3>Change Maker Calculator</h3>
+                        <a href="https://onpoint.fixmyapple.org/change-maker" target="_blank" class="tool-link"></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <span class="tool-type">Web Tool</span>
+                        <h3>Percentage Calculator</h3>
+                        <a href="https://onpoint.fixmyapple.org/percentage-calculator" target="_blank" class="tool-link"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dev Manual Tab -->
+            <div class="container" id="dev-manual">
+                <h1>GlassDoor-PayScale_Analyzer Manual</h1>
+                
+                <!-- Table of Contents Section -->
+                <div class="section" id="toc-page">
+                    <h2>Table of Contents</h2>
+                    <div class="table-of-contents">
+                        <div class="toc-item">
+                            <span>Chapter 1: System Overview</span>
+                            <span class="page-num">1</span>
+                        </div>
+                        <div class="toc-section">
+                            <div class="toc-subitem">
+                                <span>1.1 Core Architecture</span>
+                                <span class="page-num">2</span>
+                            </div>
+                            <div class="toc-subitem">
+                                <span>1.2 Repository Structure</span>
+                                <span class="page-num">3</span>
+                            </div>
+                        </div>
+
+                        <div class="toc-item">
+                            <span>Chapter 2: Technical Deep Dive</span>
+                            <span class="page-num">4</span>
+                        </div>
+                        <div class="toc-section">
+                            <div class="toc-subitem">
+                                <span>2.1 Execution Flow</span>
+                                <span class="page-num">5</span>
+                            </div>
+                            <div class="toc-subitem">
+                                <span>2.2 Key Classes and Methods</span>
+                                <span class="page-num">6</span>
+                            </div>
+                        </div>
+
+                        <div class="toc-item">
+                            <span>Chapter 3: Development Guide</span>
+                            <span class="page-num">7</span>
+                        </div>
+                        <div class="toc-section">
+                            <div class="toc-subitem">
+                                <span>3.1 Adding New Features</span>
+                                <span class="page-num">8</span>
+                            </div>
+                            <div class="toc-subitem">
+                                <span>3.2 Feature Dependencies</span>
+                                <span class="page-num">9</span>
+                            </div>
+                        </div>
+
+                        <div class="toc-item">
+                            <span>Chapter 4: File Structure</span>
+                            <span class="page-num">10</span>
+                        </div>
+                        <div class="toc-section">
+                            <div class="toc-subitem">
+                                <span>4.1 Core File Types</span>
+                                <span class="page-num">11</span>
+                            </div>
+                            <div class="toc-subitem">
+                                <span>4.2 File Dependencies</span>
+                                <span class="page-num">12</span>
+                            </div>
+                        </div>
+
+                        <h2>Reference</h2>
+                        <div class="toc-item">
+                            <span>Glossary</span>
+                            <span class="page-num">13</span>
+                        </div>
+                        <div class="toc-item">
+                            <span>Index</span>
+                            <span class="page-num">14</span>
+                        </div>
+                    </div>
+                    <div class="page-number">i</div>
+                </div>
+
+                <!-- Add navigation buttons panel -->
+                <div class="manual-navigation">
+                    <div class="page-navigation">
+                        <button class="nav-button" onclick="previousPage()" id="prevButton">
+                            ← Previous
+                        </button>
+                        <button class="nav-button" onclick="nextPage()" id="nextButton">
+                            Next →
+                        </button>
+                    </div>
+
+                    <div class="quick-tabs">
+                        <div class="quick-tab" onclick="showPage('toc-page')">Contents</div>
+                        <div class="quick-tab" onclick="showPage('glossary')">Glossary</div>
+                        <div class="quick-tab" onclick="showPage('index')">Index</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide all containers except the first one
+            const containers = document.querySelectorAll('.container');
+            containers.forEach((container, index) => {
+                if (index !== 0) container.style.display = 'none';
+            });
+
+            // Add click handlers for sidebar navigation
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all containers
+                    containers.forEach(container => {
+                        container.style.display = 'none';
+                    });
+                    
+                    // Show the selected container
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+        });
+
+        let currentPageIndex = 0;
+        const pages = [
+            'toc-page',
+            'overview',
+            'technical',
+            'development',
+            'files',
+            'glossary',
+            'index'
+        ];
+
+        function updateNavigationButtons() {
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            
+            if (prevButton && nextButton) {
+                prevButton.disabled = currentPageIndex === 0;
+                nextButton.disabled = currentPageIndex === pages.length - 1;
+            }
+        }
+
+        function previousPage() {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                showPage(pages[currentPageIndex]);
+            }
+        }
+
+        function nextPage() {
+            if (currentPageIndex < pages.length - 1) {
+                currentPageIndex++;
+                showPage(pages[currentPageIndex]);
+            }
+        }
+
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('#dev-manual .section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            const targetSection = document.querySelector(`#dev-manual .section:nth-child(${pages.indexOf(pageId) + 1})`);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            currentPageIndex = pages.indexOf(pageId);
+            updateNavigationButtons();
+        }
+
+        // Initialize navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavigationButtons();
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    previousPage();
+                } else if (e.key === 'ArrowRight') {
+                    nextPage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
