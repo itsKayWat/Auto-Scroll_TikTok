@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            width: 300px;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .italic-text {
+            font-style: italic;
+            color: #888888;
+            margin-bottom: 20px;
+        }
+
+        .toggle-container {
+            margin: 20px 0;
+        }
+
+        /* Toggle Switch Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #00c853;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .shortcuts {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            color: #cccccc;
+        }
+
+        .shortcut-key {
+            background-color: #3d3d3d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .readme-container {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .readme-button {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            transition: background-color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .readme-button span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .readme-button:hover {
+            background-color: #3d3d3d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auto Scroll for TikTok 1.0.0</h1>
+    <div class="italic-text">Works best in fullscreen mode!</div>
+
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="toggleButton">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="readme-container">
+        <button id="readmeButton" class="readme-button">
+            Documentation
+        </button>
+    </div>
+
+    <div class="shortcuts">
+        <h2 style="font-size: 16px; margin-top: 0;">Shortcuts</h2>
+        <div class="shortcut-item">
+            <span>Toggle auto scroll:</span>
+            <span class="shortcut-key">Shift + S</span>
+        </div>
+        <div class="shortcut-item">
+            <span>Toggle fullscreen:</span>
+            <span class="shortcut-key">Shift + F</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>@ll_kayawt_ll - Made with love by KayWat 
+        </p>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
