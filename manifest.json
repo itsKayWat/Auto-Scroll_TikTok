@@ -1,0 +1,39 @@
+{
+    "name": "Auto Scroll for Tiktok",
+    "description": "Automatically scroll to new video when current video ends",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "author": "KayWat",
+    "icons": {
+        "16": "img/icon16.png",
+        "32": "img/icon32.png",
+        "48": "img/icon48.png",
+        "64": "img/icon64.png",
+        "128": "img/icon128.png"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.tiktok.com/*"
+            ],
+            "js": [
+                "/js/content.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://*.tiktok.com/*",
+        "https://tiktok.com/*"
+    ],
+    "web_accessible_resources": [{
+        "resources": ["readme.html"],
+        "matches": ["<all_urls>"]
+    }]
+}
